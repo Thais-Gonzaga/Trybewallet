@@ -1,8 +1,13 @@
 // Coloque aqui suas actions
 export const USER_EMAIL = 'USER_EMAIL';
-// ação do botão entrar para salvar o email
-// preciso de um parametro email
+export const WALLET_CURRENCY = 'WALLET_CURRENCY';
+
 export const actionEmail = (state) => ({
-  type: 'USER_EMAIL',
+  type: USER_EMAIL,
+  state,
+});
+
+export const actionCurrency = (state) => ({
+  type: WALLET_CURRENCY,
   state,
 });
