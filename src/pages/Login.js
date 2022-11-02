@@ -1,6 +1,8 @@
 import React from 'react';
-
+import { func } from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { actionEmail } from '../redux/actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -23,7 +25,9 @@ class Login extends React.Component {
   }
 
   onSalve() {
-    console.log('clicou');
+    const { email } = this.state;
+    const { dispatch } = this.props;
+    dispatch(actionEmail(email));
   }
 
   verificInput() {
@@ -73,4 +77,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  emailLogin: state.user.email,
+});
+
+export default connect(mapStateToProps)(Login);
+
+Login.propTypes = {
+  dispatch: func.isRequired,
+};
