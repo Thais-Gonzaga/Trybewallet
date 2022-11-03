@@ -34,6 +34,6 @@ Header.propTypes = {
 };
 Header.defaultProps = {
   emailHeader: '',
-  currencyHeader: '',
+  currencyHeader: 'BRL',
   totalHeader: 0,
 };
