@@ -28,7 +28,12 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  emailHeader: string.isRequired,
-  currencyHeader: string.isRequired,
-  totalHeader: number.isRequired,
+  emailHeader: string,
+  currencyHeader: string,
+  totalHeader: number,
+};
+Header.defaultProps = {
+  emailHeader: '',
+  currencyHeader: '',
+  totalHeader: 0,
 };
