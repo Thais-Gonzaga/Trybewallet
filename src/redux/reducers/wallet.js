@@ -1,21 +1,32 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   WALLETFORM_CURRENCY_SUCESS,
-  WALLET_CURRENCY } from '../actions/index';
+  WALLET_CURRENCY,
+  WALLETFORM_SAVE,
+} from '../actions/index';
 
 const INITIAL_STATE = {
-  total: 0,
   currency: 'BRL',
   currencies: [],
+  expenses: [],
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case WALLET_CURRENCY:
     return {
-      total: action.state.total,
+      ...state,
       currency: action.state.currency,
     };
+  case WALLETFORM_SAVE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { id: state.expenses.length, ...action.state },
+      ],
+    };
+
   case WALLETFORM_CURRENCY_SUCESS:
     return {
       ...state,
@@ -26,4 +37,4 @@ const user = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default user;
+export default wallet;
