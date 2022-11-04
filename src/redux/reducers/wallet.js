@@ -18,7 +18,8 @@ const user = (state = INITIAL_STATE, action) => {
     };
   case WALLETFORM_CURRENCY_SUCESS:
     return {
-      currencies: action.state.filter((currency) => currency !== 'USDT'),
+      ...state,
+      currencies: Object.keys(action.state).filter((currency) => currency !== 'USDT'),
     };
 
   default: return state;
