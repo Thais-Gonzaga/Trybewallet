@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
-import { arrayOf, objectOf } from 'prop-types';
+import { arrayOf, objectOf, func } from 'prop-types';
 import { connect } from 'react-redux';
+import { actionRemoveTable } from '../redux/actions';
 
 const namesHeader = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
 class Table extends Component {
+  constructor() {
+    super();
+    this.remove = this.remove.bind(this);
+  }
+
+  remove(id) {
+    const { dispatch } = this.props;
+    dispatch(actionRemoveTable(id));
+  }
+
   render() {
     const { expensesTable } = this.props;
     return (
@@ -32,6 +43,15 @@ class Table extends Component {
                   <td>{cambio}</td>
                   <td>{conversion}</td>
                   <td>{exchangeRates.XRP.name}</td>
+                  <td>
+                    <button
+                      data-testid="delete-btn"
+                      type="button"
+                      onClick={ () => this.remove(id) }
+                    >
+                      Excluir
+                    </button>
+                  </td>
                 </tr>
               );
             })}
@@ -48,4 +68,5 @@ export default connect(mapStateToProps)(Table);
 
 Table.propTypes = {
   expensesTable: arrayOf(objectOf).isRequired,
+  dispatch: func.isRequired,
 };
