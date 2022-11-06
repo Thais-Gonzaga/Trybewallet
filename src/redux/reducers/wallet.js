@@ -3,6 +3,7 @@ import {
   WALLETFORM_CURRENCY_SUCESS,
   WALLET_CURRENCY,
   WALLETFORM_SAVE,
+  TABLE_REMOVE_ITEM,
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -31,6 +32,12 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currencies: Object.keys(action.state).filter((currency) => currency !== 'USDT'),
+    };
+  case TABLE_REMOVE_ITEM:
+    console.log(state);
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => action.state !== id),
     };
 
   default: return state;
