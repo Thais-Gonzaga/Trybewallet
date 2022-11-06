@@ -4,12 +4,17 @@ import {
   WALLET_CURRENCY,
   WALLETFORM_SAVE,
   TABLE_REMOVE_ITEM,
+  TABLE_EDIT_ITEM,
+  WALLETFORM_EDIT_ITEM,
 } from '../actions/index';
 
 const INITIAL_STATE = {
   currency: 'BRL',
   currencies: [],
   expenses: [],
+  expensesEdit: {},
+  edit: false,
+  idEdit: '',
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -19,12 +24,13 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       currency: action.state.currency,
     };
+
   case WALLETFORM_SAVE:
     return {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: state.expenses.length, ...action.state },
+        { ...action.state, id: state.expenses.length },
       ],
     };
 
@@ -33,11 +39,30 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       currencies: Object.keys(action.state).filter((currency) => currency !== 'USDT'),
     };
+
   case TABLE_REMOVE_ITEM:
-    console.log(state);
     return {
       ...state,
       expenses: state.expenses.filter(({ id }) => action.state !== id),
+    };
+
+  case TABLE_EDIT_ITEM:
+    console.log(action.state);
+    return {
+      ...state,
+      expensesEdit: state.expenses.find(({ id }) => action.state === id),
+      idEdit: action.state,
+      edit: true,
+    };
+
+  case WALLETFORM_EDIT_ITEM:
+    console.log(action.state);
+    return {
+      ...state,
+      expenses: state.expenses
+        .map((expense) => (expense.id === state.idEdit
+          ? { ...action.state, id: state.idEdit } : expense)),
+      edit: false,
     };
 
   default: return state;
