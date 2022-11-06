@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, objectOf, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { actionRemoveTable } from '../redux/actions';
+import { actionEditTable, actionRemoveTable } from '../redux/actions';
 
 const namesHeader = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
@@ -10,6 +10,12 @@ class Table extends Component {
   constructor() {
     super();
     this.remove = this.remove.bind(this);
+    this.edit = this.edit.bind(this);
+  }
+
+  edit(id) {
+    const { dispatch } = this.props;
+    dispatch(actionEditTable(id));
   }
 
   remove(id) {
@@ -50,6 +56,14 @@ class Table extends Component {
                       onClick={ () => this.remove(id) }
                     >
                       Excluir
+                    </button>
+
+                    <button
+                      data-testid="edit-btn"
+                      type="button"
+                      onClick={ () => this.edit(id) }
+                    >
+                      Editar despesa
                     </button>
                   </td>
                 </tr>
