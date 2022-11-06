@@ -6,6 +6,8 @@ export const WALLET_CURRENCY = 'WALLET_CURRENCY';
 export const WALLETFORM_CURRENCY_SUCESS = 'WALLETFORM_CURRENCY_SUCESS';
 export const WALLETFORM_SAVE = 'WALLETFORM_SAVE';
 export const TABLE_REMOVE_ITEM = 'TABLE_REMOVE_ITEM';
+export const TABLE_EDIT_ITEM = 'TABLE_EDIT_ITEM';
+export const WALLETFORM_EDIT_ITEM = 'WALLETFORM_EDIT_ITEM';
 
 export const actionEmail = (state) => ({
   type: USER_EMAIL,
@@ -32,12 +34,25 @@ export const actionForms = (state) => ({
   state,
 });
 
-export const fetchData = (state) => async (dispatch) => {
-  const currency = await fetchApi();
-  dispatch(actionForms({ ...state, exchangeRates: currency }));
-};
-
 export const actionRemoveTable = (state) => ({
   type: TABLE_REMOVE_ITEM,
   state,
 });
+
+export const actionEditTable = (state) => ({
+  type: TABLE_EDIT_ITEM,
+  state,
+});
+
+export const editForms = (state) => ({
+  type: WALLETFORM_EDIT_ITEM,
+  state,
+});
+
+export const fetchData = (state, edit = false) => async (dispatch) => {
+  const currency = await fetchApi();
+  if (edit) {
+    return dispatch(editForms({ ...state, exchangeRates: currency }));
+  }
+  return dispatch(actionForms({ ...state, exchangeRates: currency }));
+};
