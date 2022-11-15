@@ -152,6 +152,7 @@ class WalletForm extends Component {
           ? (
             <button
               type="button"
+              data-testid="edite-input"
               onClick={ this.onEdit }
             >
               Editar despesa
