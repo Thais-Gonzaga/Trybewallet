@@ -2,7 +2,6 @@
 import fetchApi from '../../services/FetchApi';
 
 export const USER_EMAIL = 'USER_EMAIL';
-export const WALLET_CURRENCY = 'WALLET_CURRENCY';
 export const WALLETFORM_CURRENCY_SUCESS = 'WALLETFORM_CURRENCY_SUCESS';
 export const WALLETFORM_SAVE = 'WALLETFORM_SAVE';
 export const TABLE_REMOVE_ITEM = 'TABLE_REMOVE_ITEM';
@@ -14,11 +13,6 @@ export const actionEmail = (state) => ({
   state,
 });
 
-export const actionCurrency = (state) => ({
-  type: WALLET_CURRENCY,
-  state,
-});
-
 export const actionCurrencySucess = (state) => ({
   type: WALLETFORM_CURRENCY_SUCESS,
   state,
@@ -26,6 +20,7 @@ export const actionCurrencySucess = (state) => ({
 
 export const fetchEconCurrency = () => async (dispatch) => {
   const currency = await fetchApi();
+  console.log({ currency });
   dispatch(actionCurrencySucess(currency));
 };
 

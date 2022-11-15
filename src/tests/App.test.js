@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
+import currecies from './mock';
 
 const userData = {
   email: 'usuario@email.com',
@@ -11,12 +12,16 @@ const userData = {
 
 const walletDate = {
   value: '5',
+  valueEdit: '10',
   description: 'mouse',
   descriptionEdit: 'teclado',
 };
 
 describe('verifica o funcionamento da aplicação', () => {
   test('verifica o funcionamento aplicação', async () => {
+    global.fetch = jest.fn().mockResolvedValue(
+      Promise.resolve({ json: () => Promise.resolve(currecies) }),
+    );
     const { history } = renderWithRouterAndRedux(<App />);
 
     const titleLogin = screen.getByRole('heading', { level: 4 });
@@ -68,7 +73,9 @@ describe('verifica o funcionamento da aplicação', () => {
 
     userEvent.click(buttonEdit);
     userEvent.clear(descriptionInput);
+    userEvent.clear(valueInput);
     userEvent.type(descriptionInput, walletDate.descriptionEdit);
+    userEvent.type(valueInput, walletDate.valueEdit);
 
     const buttonAddEdite = await screen.findByTestId('edite-input');
 
@@ -78,5 +85,16 @@ describe('verifica o funcionamento da aplicação', () => {
 
     const description2 = await screen.findByText(walletDate.descriptionEdit);
     expect(description2).toBeInTheDocument();
+
+    userEvent.click(buttonDelete);
+
+    const total = screen.getByTestId('total-field');
+    expect(total).toBeInTheDocument();
+    expect(total).toHaveTextContent('0.00');
+
+    userEvent.type(descriptionInput, 'Computador');
+    userEvent.click(buttonAdd);
+    userEvent.type(descriptionInput, 'Monitor');
+    userEvent.click(buttonAdd);
   });
 });

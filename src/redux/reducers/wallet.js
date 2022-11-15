@@ -1,7 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   WALLETFORM_CURRENCY_SUCESS,
-  WALLET_CURRENCY,
   WALLETFORM_SAVE,
   TABLE_REMOVE_ITEM,
   TABLE_EDIT_ITEM,
@@ -19,12 +18,6 @@ const INITIAL_STATE = {
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case WALLET_CURRENCY:
-    return {
-      ...state,
-      currency: action.state.currency,
-    };
-
   case WALLETFORM_SAVE:
     return {
       ...state,
@@ -47,7 +40,6 @@ const wallet = (state = INITIAL_STATE, action) => {
     };
 
   case TABLE_EDIT_ITEM:
-    console.log(action.state);
     return {
       ...state,
       expensesEdit: state.expenses.find(({ id }) => action.state === id),
@@ -56,7 +48,6 @@ const wallet = (state = INITIAL_STATE, action) => {
     };
 
   case WALLETFORM_EDIT_ITEM:
-    console.log(action.state);
     return {
       ...state,
       expenses: state.expenses
